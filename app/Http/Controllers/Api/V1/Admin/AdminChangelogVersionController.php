@@ -25,7 +25,9 @@ class AdminChangelogVersionController extends Controller
     {
         $validated = $request->validate([
             'version' => 'required',
-            'title' => 'required',
+            'title' => 'required|array',
+            'title.en' => 'required|string',
+            'title.id' => 'nullable|string',
             'release_date' => 'required|date',
             'sort_order' => 'nullable|integer',
         ]);
@@ -52,7 +54,9 @@ class AdminChangelogVersionController extends Controller
 
         $validated = $request->validate([
             'version' => 'required',
-            'title' => 'required',
+            'title' => 'required|array',
+            'title.en' => 'required|string',
+            'title.id' => 'nullable|string',
             'release_date' => 'required|date',
             'sort_order' => 'nullable|integer',
         ]);

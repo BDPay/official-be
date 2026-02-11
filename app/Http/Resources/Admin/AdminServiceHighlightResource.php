@@ -11,8 +11,8 @@ class AdminServiceHighlightResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->getTranslation('title', 'en', false) ?? '',
-            'content' => $this->getTranslation('content', 'en', false) ?? '',
+            'title' => $this->getTranslations('title'),
+            'content' => $this->getTranslations('content'),
             'sort_order' => $this->sort_order,
             'is_active' => $this->is_active,
             'created_at' => $this->created_at?->toIso8601String(),

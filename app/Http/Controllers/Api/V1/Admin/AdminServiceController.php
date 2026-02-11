@@ -24,8 +24,12 @@ class AdminServiceController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'title' => 'required',
-            'description' => 'nullable',
+            'title' => 'required|array',
+            'title.en' => 'required|string',
+            'title.id' => 'nullable|string',
+            'description' => 'nullable|array',
+            'description.en' => 'nullable|string',
+            'description.id' => 'nullable|string',
             'items' => 'nullable|array',
             'sort_order' => 'nullable|integer',
             'is_active' => 'nullable|boolean',
@@ -52,8 +56,12 @@ class AdminServiceController extends Controller
         }
 
         $validated = $request->validate([
-            'title' => 'required',
-            'description' => 'nullable',
+            'title' => 'required|array',
+            'title.en' => 'required|string',
+            'title.id' => 'nullable|string',
+            'description' => 'nullable|array',
+            'description.en' => 'nullable|string',
+            'description.id' => 'nullable|string',
             'items' => 'nullable|array',
             'sort_order' => 'nullable|integer',
             'is_active' => 'nullable|boolean',

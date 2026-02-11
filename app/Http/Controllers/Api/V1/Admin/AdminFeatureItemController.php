@@ -25,8 +25,12 @@ class AdminFeatureItemController extends Controller
     {
         $validated = $request->validate([
             'feature_category_id' => 'required|exists:feature_categories,id',
-            'title' => 'required',
-            'description' => 'nullable',
+            'title' => 'required|array',
+            'title.en' => 'required|string',
+            'title.id' => 'nullable|string',
+            'description' => 'nullable|array',
+            'description.en' => 'nullable|string',
+            'description.id' => 'nullable|string',
             'icon' => 'nullable|string',
             'sort_order' => 'nullable|integer',
         ]);
@@ -53,8 +57,12 @@ class AdminFeatureItemController extends Controller
 
         $validated = $request->validate([
             'feature_category_id' => 'required|exists:feature_categories,id',
-            'title' => 'required',
-            'description' => 'nullable',
+            'title' => 'required|array',
+            'title.en' => 'required|string',
+            'title.id' => 'nullable|string',
+            'description' => 'nullable|array',
+            'description.en' => 'nullable|string',
+            'description.id' => 'nullable|string',
             'icon' => 'nullable|string',
             'sort_order' => 'nullable|integer',
         ]);

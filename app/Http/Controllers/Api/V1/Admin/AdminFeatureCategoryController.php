@@ -24,9 +24,13 @@ class AdminFeatureCategoryController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'name' => 'required',
+            'name' => 'required|array',
+            'name.en' => 'required|string',
+            'name.id' => 'nullable|string',
             'slug' => 'required|unique:feature_categories,slug',
-            'description' => 'nullable',
+            'description' => 'nullable|array',
+            'description.en' => 'nullable|string',
+            'description.id' => 'nullable|string',
             'icon' => 'nullable|string',
             'sort_order' => 'nullable|integer',
         ]);
@@ -52,9 +56,13 @@ class AdminFeatureCategoryController extends Controller
         }
 
         $validated = $request->validate([
-            'name' => 'required',
+            'name' => 'required|array',
+            'name.en' => 'required|string',
+            'name.id' => 'nullable|string',
             'slug' => 'required|unique:feature_categories,slug,' . $category->id,
-            'description' => 'nullable',
+            'description' => 'nullable|array',
+            'description.en' => 'nullable|string',
+            'description.id' => 'nullable|string',
             'icon' => 'nullable|string',
             'sort_order' => 'nullable|integer',
         ]);

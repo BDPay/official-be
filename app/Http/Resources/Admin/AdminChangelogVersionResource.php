@@ -12,7 +12,7 @@ class AdminChangelogVersionResource extends JsonResource
         return [
             'id' => $this->id,
             'version' => $this->version,
-            'title' => $this->getTranslation('title', 'en', false) ?? '',
+            'title' => $this->getTranslations('title'),
             'release_date' => $this->release_date?->toDateString(),
             'sort_order' => $this->sort_order,
             'items' => AdminChangelogItemResource::collection($this->whenLoaded('items')),

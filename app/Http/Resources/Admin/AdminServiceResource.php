@@ -11,8 +11,8 @@ class AdminServiceResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->getTranslation('title', 'en', false) ?? '',
-            'description' => $this->getTranslation('description', 'en', false) ?? '',
+            'title' => $this->getTranslations('title'),
+            'description' => $this->getTranslations('description'),
             'items' => $this->items,
             'sort_order' => $this->sort_order,
             'is_active' => $this->is_active,

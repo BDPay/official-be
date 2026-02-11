@@ -12,9 +12,9 @@ class AdminHomepageSectionResource extends JsonResource
         return [
             'id' => $this->id,
             'section_key' => $this->section_key,
-            'title' => $this->getTranslation('title', 'en', false) ?? '',
-            'subtitle' => $this->getTranslation('subtitle', 'en', false) ?? '',
-            'description' => $this->getTranslation('description', 'en', false) ?? '',
+            'title' => $this->getTranslations('title'),
+            'subtitle' => $this->getTranslations('subtitle'),
+            'description' => $this->getTranslations('description'),
             'content' => $this->content,
             'sort_order' => $this->sort_order,
             'is_active' => $this->is_active,

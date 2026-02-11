@@ -24,8 +24,12 @@ class AdminFaqCategoryController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'name' => 'required',
-            'description' => 'nullable',
+            'name' => 'required|array',
+            'name.en' => 'required|string',
+            'name.id' => 'nullable|string',
+            'description' => 'nullable|array',
+            'description.en' => 'nullable|string',
+            'description.id' => 'nullable|string',
             'slug' => 'required|unique:faq_categories,slug',
             'sort_order' => 'nullable|integer',
         ]);
@@ -51,8 +55,12 @@ class AdminFaqCategoryController extends Controller
         }
 
         $validated = $request->validate([
-            'name' => 'required',
-            'description' => 'nullable',
+            'name' => 'required|array',
+            'name.en' => 'required|string',
+            'name.id' => 'nullable|string',
+            'description' => 'nullable|array',
+            'description.en' => 'nullable|string',
+            'description.id' => 'nullable|string',
             'slug' => 'required|unique:faq_categories,slug,' . $category->id,
             'sort_order' => 'nullable|integer',
         ]);

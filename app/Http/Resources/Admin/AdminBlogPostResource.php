@@ -11,10 +11,10 @@ class AdminBlogPostResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->getTranslation('title', 'en', false) ?? '',
+            'title' => $this->getTranslations('title'),
             'slug' => $this->slug,
-            'excerpt' => $this->getTranslation('excerpt', 'en', false) ?? '',
-            'content' => $this->getTranslation('content', 'en', false) ?? '',
+            'excerpt' => $this->getTranslations('excerpt'),
+            'content' => $this->getTranslations('content'),
             'image' => $this->image,
             'image_url' => $this->image_url,
             'published_at' => $this->published_at?->toIso8601String(),

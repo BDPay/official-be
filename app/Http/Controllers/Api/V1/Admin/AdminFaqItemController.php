@@ -25,8 +25,12 @@ class AdminFaqItemController extends Controller
     {
         $validated = $request->validate([
             'faq_category_id' => 'required|exists:faq_categories,id',
-            'question' => 'required',
-            'answer' => 'required',
+            'question' => 'required|array',
+            'question.en' => 'required|string',
+            'question.id' => 'nullable|string',
+            'answer' => 'required|array',
+            'answer.en' => 'required|string',
+            'answer.id' => 'nullable|string',
             'sort_order' => 'nullable|integer',
         ]);
 
@@ -52,8 +56,12 @@ class AdminFaqItemController extends Controller
 
         $validated = $request->validate([
             'faq_category_id' => 'required|exists:faq_categories,id',
-            'question' => 'required',
-            'answer' => 'required',
+            'question' => 'required|array',
+            'question.en' => 'required|string',
+            'question.id' => 'nullable|string',
+            'answer' => 'required|array',
+            'answer.en' => 'required|string',
+            'answer.id' => 'nullable|string',
             'sort_order' => 'nullable|integer',
         ]);
 

@@ -24,8 +24,12 @@ class AdminServiceHighlightController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'title' => 'required',
-            'content' => 'required',
+            'title' => 'required|array',
+            'title.en' => 'required|string',
+            'title.id' => 'nullable|string',
+            'content' => 'required|array',
+            'content.en' => 'required|string',
+            'content.id' => 'nullable|string',
             'sort_order' => 'nullable|integer',
             'is_active' => 'nullable|boolean',
         ]);
@@ -51,8 +55,12 @@ class AdminServiceHighlightController extends Controller
         }
 
         $validated = $request->validate([
-            'title' => 'required',
-            'content' => 'required',
+            'title' => 'required|array',
+            'title.en' => 'required|string',
+            'title.id' => 'nullable|string',
+            'content' => 'required|array',
+            'content.en' => 'required|string',
+            'content.id' => 'nullable|string',
             'sort_order' => 'nullable|integer',
             'is_active' => 'nullable|boolean',
         ]);

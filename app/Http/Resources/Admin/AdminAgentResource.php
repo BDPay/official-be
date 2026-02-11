@@ -15,7 +15,7 @@ class AdminAgentResource extends JsonResource
             'type' => $this->type,
             'phone' => $this->phone,
             'email' => $this->email,
-            'address' => $this->getTranslation('address', 'en', false) ?? '',
+            'address' => $this->getTranslations('address'),
             'city' => $this->city,
             'province' => $this->province,
             'latitude' => $this->latitude,

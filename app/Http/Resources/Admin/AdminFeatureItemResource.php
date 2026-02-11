@@ -12,8 +12,8 @@ class AdminFeatureItemResource extends JsonResource
         return [
             'id' => $this->id,
             'feature_category_id' => $this->feature_category_id,
-            'title' => $this->getTranslation('title', 'en', false) ?? '',
-            'description' => $this->getTranslation('description', 'en', false) ?? '',
+            'title' => $this->getTranslations('title'),
+            'description' => $this->getTranslations('description'),
             'icon' => $this->icon,
             'sort_order' => $this->sort_order,
             'created_at' => $this->created_at?->toIso8601String(),

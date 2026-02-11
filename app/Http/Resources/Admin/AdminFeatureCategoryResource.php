@@ -11,9 +11,9 @@ class AdminFeatureCategoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->getTranslation('name', 'en', false) ?? '',
+            'name' => $this->getTranslations('name'),
             'slug' => $this->slug,
-            'description' => $this->getTranslation('description', 'en', false) ?? '',
+            'description' => $this->getTranslations('description'),
             'icon' => $this->icon,
             'sort_order' => $this->sort_order,
             'items' => AdminFeatureItemResource::collection($this->whenLoaded('items')),

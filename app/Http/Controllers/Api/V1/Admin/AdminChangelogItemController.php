@@ -26,7 +26,9 @@ class AdminChangelogItemController extends Controller
         $validated = $request->validate([
             'changelog_version_id' => 'required|exists:changelog_versions,id',
             'type' => 'required|in:added,changed,fixed,removed',
-            'description' => 'required',
+            'description' => 'required|array',
+            'description.en' => 'required|string',
+            'description.id' => 'nullable|string',
             'sort_order' => 'nullable|integer',
         ]);
 
@@ -53,7 +55,9 @@ class AdminChangelogItemController extends Controller
         $validated = $request->validate([
             'changelog_version_id' => 'required|exists:changelog_versions,id',
             'type' => 'required|in:added,changed,fixed,removed',
-            'description' => 'required',
+            'description' => 'required|array',
+            'description.en' => 'required|string',
+            'description.id' => 'nullable|string',
             'sort_order' => 'nullable|integer',
         ]);
 

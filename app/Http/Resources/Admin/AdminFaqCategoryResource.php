@@ -11,8 +11,8 @@ class AdminFaqCategoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->getTranslation('name', 'en', false) ?? '',
-            'description' => $this->getTranslation('description', 'en', false) ?? '',
+            'name' => $this->getTranslations('name'),
+            'description' => $this->getTranslations('description'),
             'slug' => $this->slug,
             'sort_order' => $this->sort_order,
             'items' => AdminFaqItemResource::collection($this->whenLoaded('items')),

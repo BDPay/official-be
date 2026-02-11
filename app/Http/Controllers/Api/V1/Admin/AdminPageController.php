@@ -25,9 +25,15 @@ class AdminPageController extends Controller
     {
         $validated = $request->validate([
             'slug' => 'required|unique:pages,slug',
-            'title' => 'required',
-            'content' => 'required',
-            'meta_description' => 'nullable',
+            'title' => 'required|array',
+            'title.en' => 'required|string',
+            'title.id' => 'nullable|string',
+            'content' => 'required|array',
+            'content.en' => 'required|string',
+            'content.id' => 'nullable|string',
+            'meta_description' => 'nullable|array',
+            'meta_description.en' => 'nullable|string',
+            'meta_description.id' => 'nullable|string',
             'is_published' => 'nullable|boolean',
         ]);
 
@@ -53,9 +59,15 @@ class AdminPageController extends Controller
 
         $validated = $request->validate([
             'slug' => 'required|unique:pages,slug,' . $page->id,
-            'title' => 'required',
-            'content' => 'required',
-            'meta_description' => 'nullable',
+            'title' => 'required|array',
+            'title.en' => 'required|string',
+            'title.id' => 'nullable|string',
+            'content' => 'required|array',
+            'content.en' => 'required|string',
+            'content.id' => 'nullable|string',
+            'meta_description' => 'nullable|array',
+            'meta_description.en' => 'nullable|string',
+            'meta_description.id' => 'nullable|string',
             'is_published' => 'nullable|boolean',
         ]);
 

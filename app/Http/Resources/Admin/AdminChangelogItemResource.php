@@ -13,7 +13,7 @@ class AdminChangelogItemResource extends JsonResource
             'id' => $this->id,
             'changelog_version_id' => $this->changelog_version_id,
             'type' => $this->type,
-            'description' => $this->getTranslation('description', 'en', false) ?? '',
+            'description' => $this->getTranslations('description'),
             'sort_order' => $this->sort_order,
             'created_at' => $this->created_at?->toIso8601String(),
             'updated_at' => $this->updated_at?->toIso8601String(),

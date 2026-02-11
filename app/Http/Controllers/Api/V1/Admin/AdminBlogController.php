@@ -24,10 +24,16 @@ class AdminBlogController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'title' => 'required',
+            'title' => 'required|array',
+            'title.en' => 'required|string',
+            'title.id' => 'nullable|string',
             'slug' => 'nullable|string|unique:blog_posts,slug',
-            'excerpt' => 'nullable',
-            'content' => 'required',
+            'excerpt' => 'nullable|array',
+            'excerpt.en' => 'nullable|string',
+            'excerpt.id' => 'nullable|string',
+            'content' => 'required|array',
+            'content.en' => 'required|string',
+            'content.id' => 'nullable|string',
             'image' => 'nullable|string',
             'published_at' => 'nullable|date',
             'is_published' => 'nullable|boolean',
@@ -55,10 +61,16 @@ class AdminBlogController extends Controller
         }
 
         $validated = $request->validate([
-            'title' => 'required',
+            'title' => 'required|array',
+            'title.en' => 'required|string',
+            'title.id' => 'nullable|string',
             'slug' => 'nullable|string|unique:blog_posts,slug,' . $post->id,
-            'excerpt' => 'nullable',
-            'content' => 'required',
+            'excerpt' => 'nullable|array',
+            'excerpt.en' => 'nullable|string',
+            'excerpt.id' => 'nullable|string',
+            'content' => 'required|array',
+            'content.en' => 'required|string',
+            'content.id' => 'nullable|string',
             'image' => 'nullable|string',
             'published_at' => 'nullable|date',
             'is_published' => 'nullable|boolean',

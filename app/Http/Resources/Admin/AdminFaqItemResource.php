@@ -12,8 +12,8 @@ class AdminFaqItemResource extends JsonResource
         return [
             'id' => $this->id,
             'faq_category_id' => $this->faq_category_id,
-            'question' => $this->getTranslation('question', 'en', false) ?? '',
-            'answer' => $this->getTranslation('answer', 'en', false) ?? '',
+            'question' => $this->getTranslations('question'),
+            'answer' => $this->getTranslations('answer'),
             'sort_order' => $this->sort_order,
             'created_at' => $this->created_at?->toIso8601String(),
             'updated_at' => $this->updated_at?->toIso8601String(),
