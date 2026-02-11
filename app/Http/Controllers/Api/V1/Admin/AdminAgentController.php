@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Admin\AdminAgentResource;
 use App\Models\Agent;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ class AdminAgentController extends Controller
     public function index(): JsonResponse
     {
         $agents = Agent::orderBy('sort_order')->get();
-        return response()->json(['data' => $agents]);
+        return response()->json(['data' => AdminAgentResource::collection($agents)]);
     }
 
     public function store(Request $request): JsonResponse
@@ -33,7 +34,7 @@ class AdminAgentController extends Controller
         ]);
 
         $agent = Agent::create($validated);
-        return response()->json(['data' => $agent], 201);
+        return response()->json(['data' => new AdminAgentResource($agent)], 201);
     }
 
     public function show(string $id): JsonResponse
@@ -42,7 +43,7 @@ class AdminAgentController extends Controller
         if (!$agent) {
             return response()->json(['message' => 'Not found.'], 404);
         }
-        return response()->json(['data' => $agent]);
+        return response()->json(['data' => new AdminAgentResource($agent)]);
     }
 
     public function update(Request $request, string $id): JsonResponse
@@ -68,7 +69,7 @@ class AdminAgentController extends Controller
         ]);
 
         $agent->update($validated);
-        return response()->json(['data' => $agent]);
+        return response()->json(['data' => new AdminAgentResource($agent)]);
     }
 
     public function destroy(string $id): JsonResponse

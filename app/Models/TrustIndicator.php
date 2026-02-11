@@ -26,7 +26,7 @@ class TrustIndicator extends Model
         if (str_starts_with($this->logo, 'http')) {
             return $this->logo;
         }
-        return asset('storage/' . $this->logo);
+        return asset('storage/' . ltrim($this->logo, '/'));
     }
 
     public function scopeActive($query)

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Admin\AdminServiceResource;
 use App\Models\Service;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ class AdminServiceController extends Controller
     public function index(): JsonResponse
     {
         $services = Service::orderBy('sort_order')->get();
-        return response()->json(['data' => $services]);
+        return response()->json(['data' => AdminServiceResource::collection($services)]);
     }
 
     public function store(Request $request): JsonResponse
@@ -26,7 +27,7 @@ class AdminServiceController extends Controller
         ]);
 
         $service = Service::create($validated);
-        return response()->json(['data' => $service], 201);
+        return response()->json(['data' => new AdminServiceResource($service)], 201);
     }
 
     public function show(string $id): JsonResponse
@@ -35,7 +36,7 @@ class AdminServiceController extends Controller
         if (!$service) {
             return response()->json(['message' => 'Not found.'], 404);
         }
-        return response()->json(['data' => $service]);
+        return response()->json(['data' => new AdminServiceResource($service)]);
     }
 
     public function update(Request $request, string $id): JsonResponse
@@ -54,7 +55,7 @@ class AdminServiceController extends Controller
         ]);
 
         $service->update($validated);
-        return response()->json(['data' => $service]);
+        return response()->json(['data' => new AdminServiceResource($service)]);
     }
 
     public function destroy(string $id): JsonResponse

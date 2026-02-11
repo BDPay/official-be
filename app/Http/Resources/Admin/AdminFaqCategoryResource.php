@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Http\Resources\Admin;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class AdminFaqCategoryResource extends JsonResource
+{
+    public function toArray(Request $request): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->getTranslation('name', 'en', false) ?? '',
+            'description' => $this->getTranslation('description', 'en', false) ?? '',
+            'slug' => $this->slug,
+            'sort_order' => $this->sort_order,
+            'items' => AdminFaqItemResource::collection($this->whenLoaded('items')),
+            'created_at' => $this->created_at?->toIso8601String(),
+            'updated_at' => $this->updated_at?->toIso8601String(),
+        ];
+    }
+}

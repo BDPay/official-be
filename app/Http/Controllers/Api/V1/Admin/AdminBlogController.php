@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Admin\AdminBlogPostResource;
 use App\Models\BlogPost;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ class AdminBlogController extends Controller
     public function index(): JsonResponse
     {
         $posts = BlogPost::orderByDesc('created_at')->get();
-        return response()->json(['data' => $posts]);
+        return response()->json(['data' => AdminBlogPostResource::collection($posts)]);
     }
 
     public function store(Request $request): JsonResponse
@@ -29,7 +30,7 @@ class AdminBlogController extends Controller
         ]);
 
         $post = BlogPost::create($validated);
-        return response()->json(['data' => $post], 201);
+        return response()->json(['data' => new AdminBlogPostResource($post)], 201);
     }
 
     public function show(string $id): JsonResponse
@@ -38,7 +39,7 @@ class AdminBlogController extends Controller
         if (!$post) {
             return response()->json(['message' => 'Not found.'], 404);
         }
-        return response()->json(['data' => $post]);
+        return response()->json(['data' => new AdminBlogPostResource($post)]);
     }
 
     public function update(Request $request, string $id): JsonResponse
@@ -60,7 +61,7 @@ class AdminBlogController extends Controller
         ]);
 
         $post->update($validated);
-        return response()->json(['data' => $post]);
+        return response()->json(['data' => new AdminBlogPostResource($post)]);
     }
 
     public function destroy(string $id): JsonResponse

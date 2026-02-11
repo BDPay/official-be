@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Admin\AdminChangelogVersionResource;
 use App\Models\ChangelogVersion;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ class AdminChangelogVersionController extends Controller
     public function index(): JsonResponse
     {
         $versions = ChangelogVersion::with('items')->orderByDesc('release_date')->get();
-        return response()->json(['data' => $versions]);
+        return response()->json(['data' => AdminChangelogVersionResource::collection($versions)]);
     }
 
     public function store(Request $request): JsonResponse
@@ -25,7 +26,7 @@ class AdminChangelogVersionController extends Controller
         ]);
 
         $version = ChangelogVersion::create($validated);
-        return response()->json(['data' => $version], 201);
+        return response()->json(['data' => new AdminChangelogVersionResource($version)], 201);
     }
 
     public function show(string $id): JsonResponse
@@ -34,7 +35,7 @@ class AdminChangelogVersionController extends Controller
         if (!$version) {
             return response()->json(['message' => 'Not found.'], 404);
         }
-        return response()->json(['data' => $version]);
+        return response()->json(['data' => new AdminChangelogVersionResource($version)]);
     }
 
     public function update(Request $request, string $id): JsonResponse
@@ -52,7 +53,7 @@ class AdminChangelogVersionController extends Controller
         ]);
 
         $version->update($validated);
-        return response()->json(['data' => $version]);
+        return response()->json(['data' => new AdminChangelogVersionResource($version)]);
     }
 
     public function destroy(string $id): JsonResponse

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Admin\AdminPageResource;
 use App\Models\Page;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ class AdminPageController extends Controller
     public function index(): JsonResponse
     {
         $pages = Page::orderBy('slug')->get();
-        return response()->json(['data' => $pages]);
+        return response()->json(['data' => AdminPageResource::collection($pages)]);
     }
 
     public function store(Request $request): JsonResponse
@@ -26,7 +27,7 @@ class AdminPageController extends Controller
         ]);
 
         $page = Page::create($validated);
-        return response()->json(['data' => $page], 201);
+        return response()->json(['data' => new AdminPageResource($page)], 201);
     }
 
     public function show(string $id): JsonResponse
@@ -35,7 +36,7 @@ class AdminPageController extends Controller
         if (!$page) {
             return response()->json(['message' => 'Not found.'], 404);
         }
-        return response()->json(['data' => $page]);
+        return response()->json(['data' => new AdminPageResource($page)]);
     }
 
     public function update(Request $request, string $id): JsonResponse
@@ -54,7 +55,7 @@ class AdminPageController extends Controller
         ]);
 
         $page->update($validated);
-        return response()->json(['data' => $page]);
+        return response()->json(['data' => new AdminPageResource($page)]);
     }
 
     public function destroy(string $id): JsonResponse

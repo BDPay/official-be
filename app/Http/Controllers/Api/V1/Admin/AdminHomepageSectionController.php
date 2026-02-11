@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Admin\AdminHomepageSectionResource;
 use App\Models\HomepageSection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ class AdminHomepageSectionController extends Controller
     public function index(): JsonResponse
     {
         $sections = HomepageSection::orderBy('sort_order')->get();
-        return response()->json(['data' => $sections]);
+        return response()->json(['data' => AdminHomepageSectionResource::collection($sections)]);
     }
 
     public function store(Request $request): JsonResponse
@@ -28,7 +29,7 @@ class AdminHomepageSectionController extends Controller
         ]);
 
         $section = HomepageSection::create($validated);
-        return response()->json(['data' => $section], 201);
+        return response()->json(['data' => new AdminHomepageSectionResource($section)], 201);
     }
 
     public function show(string $id): JsonResponse
@@ -37,7 +38,7 @@ class AdminHomepageSectionController extends Controller
         if (!$section) {
             return response()->json(['message' => 'Not found.'], 404);
         }
-        return response()->json(['data' => $section]);
+        return response()->json(['data' => new AdminHomepageSectionResource($section)]);
     }
 
     public function update(Request $request, string $id): JsonResponse
@@ -58,7 +59,7 @@ class AdminHomepageSectionController extends Controller
         ]);
 
         $section->update($validated);
-        return response()->json(['data' => $section]);
+        return response()->json(['data' => new AdminHomepageSectionResource($section)]);
     }
 
     public function destroy(string $id): JsonResponse
