@@ -5,15 +5,20 @@ namespace App\Http\Controllers\Api\V1\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\AdminFaqCategoryResource;
 use App\Models\FaqCategory;
+use App\Traits\PaginatesAndSearches;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class AdminFaqCategoryController extends Controller
 {
-    public function index(): JsonResponse
+    use PaginatesAndSearches;
+
+    public function index(Request $request): AnonymousResourceCollection
     {
-        $categories = FaqCategory::with('items')->orderBy('sort_order')->get();
-        return response()->json(['data' => AdminFaqCategoryResource::collection($categories)]);
+        $query = FaqCategory::with('items')->orderBy('sort_order');
+        $paginated = $this->paginateAndSearch($query, $request, ['name', 'slug', 'description']);
+        return AdminFaqCategoryResource::collection($paginated);
     }
 
     public function store(Request $request): JsonResponse

@@ -5,15 +5,20 @@ namespace App\Http\Controllers\Api\V1\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\AdminBlogPostResource;
 use App\Models\BlogPost;
+use App\Traits\PaginatesAndSearches;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class AdminBlogController extends Controller
 {
-    public function index(): JsonResponse
+    use PaginatesAndSearches;
+
+    public function index(Request $request): AnonymousResourceCollection
     {
-        $posts = BlogPost::orderByDesc('created_at')->get();
-        return response()->json(['data' => AdminBlogPostResource::collection($posts)]);
+        $query = BlogPost::orderByDesc('created_at');
+        $paginated = $this->paginateAndSearch($query, $request, ['title', 'slug', 'excerpt']);
+        return AdminBlogPostResource::collection($paginated);
     }
 
     public function store(Request $request): JsonResponse

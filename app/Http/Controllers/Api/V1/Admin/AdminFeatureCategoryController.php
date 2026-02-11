@@ -5,15 +5,20 @@ namespace App\Http\Controllers\Api\V1\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\AdminFeatureCategoryResource;
 use App\Models\FeatureCategory;
+use App\Traits\PaginatesAndSearches;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class AdminFeatureCategoryController extends Controller
 {
-    public function index(): JsonResponse
+    use PaginatesAndSearches;
+
+    public function index(Request $request): AnonymousResourceCollection
     {
-        $categories = FeatureCategory::with('items')->orderBy('sort_order')->get();
-        return response()->json(['data' => AdminFeatureCategoryResource::collection($categories)]);
+        $query = FeatureCategory::with('items')->orderBy('sort_order');
+        $paginated = $this->paginateAndSearch($query, $request, ['name', 'slug', 'description']);
+        return AdminFeatureCategoryResource::collection($paginated);
     }
 
     public function store(Request $request): JsonResponse

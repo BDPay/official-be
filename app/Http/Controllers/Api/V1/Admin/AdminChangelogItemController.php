@@ -5,15 +5,20 @@ namespace App\Http\Controllers\Api\V1\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\AdminChangelogItemResource;
 use App\Models\ChangelogItem;
+use App\Traits\PaginatesAndSearches;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class AdminChangelogItemController extends Controller
 {
-    public function index(): JsonResponse
+    use PaginatesAndSearches;
+
+    public function index(Request $request): AnonymousResourceCollection
     {
-        $items = ChangelogItem::orderBy('sort_order')->get();
-        return response()->json(['data' => AdminChangelogItemResource::collection($items)]);
+        $query = ChangelogItem::orderBy('sort_order');
+        $paginated = $this->paginateAndSearch($query, $request, ['description', 'type']);
+        return AdminChangelogItemResource::collection($paginated);
     }
 
     public function store(Request $request): JsonResponse

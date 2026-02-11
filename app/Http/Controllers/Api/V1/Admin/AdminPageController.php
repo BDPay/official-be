@@ -5,15 +5,20 @@ namespace App\Http\Controllers\Api\V1\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\AdminPageResource;
 use App\Models\Page;
+use App\Traits\PaginatesAndSearches;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class AdminPageController extends Controller
 {
-    public function index(): JsonResponse
+    use PaginatesAndSearches;
+
+    public function index(Request $request): AnonymousResourceCollection
     {
-        $pages = Page::orderBy('slug')->get();
-        return response()->json(['data' => AdminPageResource::collection($pages)]);
+        $query = Page::orderBy('slug');
+        $paginated = $this->paginateAndSearch($query, $request, ['title', 'slug']);
+        return AdminPageResource::collection($paginated);
     }
 
     public function store(Request $request): JsonResponse

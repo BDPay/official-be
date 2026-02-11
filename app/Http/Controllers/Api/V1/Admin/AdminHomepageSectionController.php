@@ -5,15 +5,20 @@ namespace App\Http\Controllers\Api\V1\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\AdminHomepageSectionResource;
 use App\Models\HomepageSection;
+use App\Traits\PaginatesAndSearches;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class AdminHomepageSectionController extends Controller
 {
-    public function index(): JsonResponse
+    use PaginatesAndSearches;
+
+    public function index(Request $request): AnonymousResourceCollection
     {
-        $sections = HomepageSection::orderBy('sort_order')->get();
-        return response()->json(['data' => AdminHomepageSectionResource::collection($sections)]);
+        $query = HomepageSection::orderBy('sort_order');
+        $paginated = $this->paginateAndSearch($query, $request, ['section_key', 'title', 'subtitle']);
+        return AdminHomepageSectionResource::collection($paginated);
     }
 
     public function store(Request $request): JsonResponse

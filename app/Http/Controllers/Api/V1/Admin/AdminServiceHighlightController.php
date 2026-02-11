@@ -5,15 +5,20 @@ namespace App\Http\Controllers\Api\V1\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\AdminServiceHighlightResource;
 use App\Models\ServiceHighlight;
+use App\Traits\PaginatesAndSearches;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class AdminServiceHighlightController extends Controller
 {
-    public function index(): JsonResponse
+    use PaginatesAndSearches;
+
+    public function index(Request $request): AnonymousResourceCollection
     {
-        $highlights = ServiceHighlight::orderBy('sort_order')->get();
-        return response()->json(['data' => AdminServiceHighlightResource::collection($highlights)]);
+        $query = ServiceHighlight::orderBy('sort_order');
+        $paginated = $this->paginateAndSearch($query, $request, ['title', 'content']);
+        return AdminServiceHighlightResource::collection($paginated);
     }
 
     public function store(Request $request): JsonResponse

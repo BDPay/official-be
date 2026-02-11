@@ -3,16 +3,22 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Admin\AdminSettingResource;
 use App\Models\Setting;
+use App\Traits\PaginatesAndSearches;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class AdminSettingController extends Controller
 {
-    public function index(): JsonResponse
+    use PaginatesAndSearches;
+
+    public function index(Request $request): AnonymousResourceCollection
     {
-        $settings = Setting::orderBy('group')->orderBy('key')->get();
-        return response()->json(['data' => $settings]);
+        $query = Setting::orderBy('group')->orderBy('key');
+        $paginated = $this->paginateAndSearch($query, $request, ['group', 'key']);
+        return AdminSettingResource::collection($paginated);
     }
 
     public function store(Request $request): JsonResponse
@@ -24,7 +30,7 @@ class AdminSettingController extends Controller
         ]);
 
         $setting = Setting::create($validated);
-        return response()->json(['data' => $setting], 201);
+        return response()->json(['data' => new AdminSettingResource($setting)], 201);
     }
 
     public function show(string $id): JsonResponse
@@ -33,7 +39,7 @@ class AdminSettingController extends Controller
         if (!$setting) {
             return response()->json(['message' => 'Not found.'], 404);
         }
-        return response()->json(['data' => $setting]);
+        return response()->json(['data' => new AdminSettingResource($setting)]);
     }
 
     public function update(Request $request, string $id): JsonResponse
@@ -50,7 +56,7 @@ class AdminSettingController extends Controller
         ]);
 
         $setting->update($validated);
-        return response()->json(['data' => $setting]);
+        return response()->json(['data' => new AdminSettingResource($setting)]);
     }
 
     public function destroy(string $id): JsonResponse

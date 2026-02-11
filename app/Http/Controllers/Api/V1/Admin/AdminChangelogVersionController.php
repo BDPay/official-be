@@ -5,15 +5,20 @@ namespace App\Http\Controllers\Api\V1\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\AdminChangelogVersionResource;
 use App\Models\ChangelogVersion;
+use App\Traits\PaginatesAndSearches;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class AdminChangelogVersionController extends Controller
 {
-    public function index(): JsonResponse
+    use PaginatesAndSearches;
+
+    public function index(Request $request): AnonymousResourceCollection
     {
-        $versions = ChangelogVersion::with('items')->orderByDesc('release_date')->get();
-        return response()->json(['data' => AdminChangelogVersionResource::collection($versions)]);
+        $query = ChangelogVersion::with('items')->orderByDesc('release_date');
+        $paginated = $this->paginateAndSearch($query, $request, ['version', 'title']);
+        return AdminChangelogVersionResource::collection($paginated);
     }
 
     public function store(Request $request): JsonResponse

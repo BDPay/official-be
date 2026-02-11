@@ -5,15 +5,20 @@ namespace App\Http\Controllers\Api\V1\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\AdminAgentResource;
 use App\Models\Agent;
+use App\Traits\PaginatesAndSearches;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class AdminAgentController extends Controller
 {
-    public function index(): JsonResponse
+    use PaginatesAndSearches;
+
+    public function index(Request $request): AnonymousResourceCollection
     {
-        $agents = Agent::orderBy('sort_order')->get();
-        return response()->json(['data' => AdminAgentResource::collection($agents)]);
+        $query = Agent::orderBy('sort_order');
+        $paginated = $this->paginateAndSearch($query, $request, ['name', 'city', 'email', 'phone']);
+        return AdminAgentResource::collection($paginated);
     }
 
     public function store(Request $request): JsonResponse

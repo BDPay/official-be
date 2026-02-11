@@ -3,16 +3,22 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Admin\AdminTrustIndicatorResource;
 use App\Models\TrustIndicator;
+use App\Traits\PaginatesAndSearches;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class AdminTrustIndicatorController extends Controller
 {
-    public function index(): JsonResponse
+    use PaginatesAndSearches;
+
+    public function index(Request $request): AnonymousResourceCollection
     {
-        $indicators = TrustIndicator::orderBy('sort_order')->get();
-        return response()->json(['data' => $indicators]);
+        $query = TrustIndicator::orderBy('sort_order');
+        $paginated = $this->paginateAndSearch($query, $request, ['name', 'url']);
+        return AdminTrustIndicatorResource::collection($paginated);
     }
 
     public function store(Request $request): JsonResponse
@@ -27,7 +33,7 @@ class AdminTrustIndicatorController extends Controller
         ]);
 
         $indicator = TrustIndicator::create($validated);
-        return response()->json(['data' => $indicator], 201);
+        return response()->json(['data' => new AdminTrustIndicatorResource($indicator)], 201);
     }
 
     public function show(string $id): JsonResponse
@@ -36,7 +42,7 @@ class AdminTrustIndicatorController extends Controller
         if (!$indicator) {
             return response()->json(['message' => 'Not found.'], 404);
         }
-        return response()->json(['data' => $indicator]);
+        return response()->json(['data' => new AdminTrustIndicatorResource($indicator)]);
     }
 
     public function update(Request $request, string $id): JsonResponse
@@ -56,7 +62,7 @@ class AdminTrustIndicatorController extends Controller
         ]);
 
         $indicator->update($validated);
-        return response()->json(['data' => $indicator]);
+        return response()->json(['data' => new AdminTrustIndicatorResource($indicator)]);
     }
 
     public function destroy(string $id): JsonResponse
