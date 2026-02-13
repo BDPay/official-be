@@ -14,7 +14,7 @@ class AgentSeeder extends Seeder
             'type' => 'in_house',
             'phone' => '+62 8113240999',
             'email' => 'cs@bdpay.co.id',
-            'address' => ['en' => 'Gedung Royal Square Lt. 3A Jl. Raya Menganti No.479, Babatan, Kec. Wiyung, Surabaya, Jawa Timur 60227'],
+            'address' => ['en' => 'Gedung Royal Square Lt. 3A Jl. Raya Menganti No.479, Babatan, Kec. Wiyung, Surabaya, Jawa Timur 60227', 'id' => 'Gedung Royal Square Lt. 3A Jl. Raya Menganti No.479, Babatan, Kec. Wiyung, Surabaya, Jawa Timur 60227'],
             'city' => 'Surabaya',
             'province' => 'Jawa Timur',
             'maps_url' => 'https://goo.gl/maps/PSLVrhqczCMKxYpE6',

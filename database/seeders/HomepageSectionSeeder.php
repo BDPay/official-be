@@ -11,8 +11,8 @@ class HomepageSectionSeeder extends Seeder
     {
         HomepageSection::create([
             'section_key' => 'hero',
-            'title' => ['en' => 'Smart, Steady, And Secure Business Solutions'],
-            'description' => ['en' => "To become a reliable and innovative financial institution and play an active role in supporting the community's economy in accordance with government policies."],
+            'title' => ['en' => 'Smart, Steady, And Secure Business Solutions', 'id' => 'Solusi Bisnis yang Cerdas, Handal, dan Aman'],
+            'description' => ['en' => "To become a reliable and innovative financial institution and play an active role in supporting the community's economy in accordance with government policies.", 'id' => 'Menjadi lembaga keuangan yang handal dan inovatif serta berperan aktif dalam mendukung perekonomian masyarakat sesuai dengan kebijakan pemerintah.'],
             'content' => [
                 'badges' => [
                     ['name' => 'ISO', 'image' => '/img/logo-iso.png'],
@@ -31,7 +31,7 @@ class HomepageSectionSeeder extends Seeder
 
         HomepageSection::create([
             'section_key' => 'projections',
-            'title' => ['en' => 'BDPay Business Projections'],
+            'title' => ['en' => 'BDPay Business Projections', 'id' => 'Proyeksi Bisnis BDPay'],
             'content' => [
                 'counters' => [
                     ['value' => 300, 'suffix' => 'K+', 'title' => 'Projecting business', 'subtitle' => 'using BDPay all over 2021'],

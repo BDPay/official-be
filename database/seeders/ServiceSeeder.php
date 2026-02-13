@@ -10,8 +10,8 @@ class ServiceSeeder extends Seeder
     public function run(): void
     {
         Service::create([
-            'title' => ['en' => 'Personal Transfer (Accept Payment)'],
-            'description' => ['en' => 'Transfer funds for personal needs'],
+            'title' => ['en' => 'Personal Transfer (Accept Payment)', 'id' => 'Transfer Personal (Terima Pembayaran)'],
+            'description' => ['en' => 'Transfer funds for personal needs', 'id' => 'Transfer dana untuk kebutuhan personal'],
             'items' => [
                 ['label' => 'Transfer by Agent', 'description' => 'Transfer uang melalui Agent BDPay'],
                 ['label' => 'In-House Transfer', 'description' => 'Transfer uang melalui Agent in-house BDPay'],
@@ -21,8 +21,8 @@ class ServiceSeeder extends Seeder
         ]);
 
         Service::create([
-            'title' => ['en' => 'Corporate Transfer (Payment)'],
-            'description' => ['en' => 'Transfer funds for corporate needs'],
+            'title' => ['en' => 'Corporate Transfer (Payment)', 'id' => 'Transfer Korporat (Pembayaran)'],
+            'description' => ['en' => 'Transfer funds for corporate needs', 'id' => 'Transfer dana untuk kebutuhan korporat'],
             'items' => [
                 ['label' => 'Transfer by Agent', 'description' => 'Transfer uang melalui Agent BDPay'],
                 ['label' => 'In-House Transfer', 'description' => 'Transfer uang melalui Agent in-house BDPay'],
@@ -32,8 +32,8 @@ class ServiceSeeder extends Seeder
         ]);
 
         Service::create([
-            'title' => ['en' => 'Disbursement/Payroll (Multiple Recipients)'],
-            'description' => ['en' => 'Send funds to multiple recipients at once'],
+            'title' => ['en' => 'Disbursement/Payroll (Multiple Recipients)', 'id' => 'Disbursement/Payroll (Beberapa Penerima)'],
+            'description' => ['en' => 'Send funds to multiple recipients at once', 'id' => 'Kirim dana ke beberapa penerima sekaligus'],
             'items' => [],
             'sort_order' => 2,
         ]);
